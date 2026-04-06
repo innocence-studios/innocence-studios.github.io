@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1">
+    <title>
+      Fret Reader
+    </title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <link rel="icon" href="./icon.png"/>
+    <script type="module" src="./index.js"></script>
+  </head>
+  <body id="body" align="center">
+    <div id="particles-js" hidden></div>
+    <header>
+      <a href="../">← Homepage</a>
+      <h1>Fret reader</h1>
+    </header>
+    <div id="tuning">
+      <select id="tuning-selector">
+        <option value="">— Select tuning —</option>
+        <optgroup label="Bass 😎">
+          <optgroup label=" 4 String">
+            <option value="4b-Standard">Standard (E A D g)</option>
+            <option value="4b-Drop D">Drop D (D A D g)</option>
+            <option value="4b-Drop C♯">Drop C♯ (C♯ G♯ C♯ f♯)</option>
+            <option value="4b-Drop C">Drop C (C G C f)</option>
+            <option value="4b-Drop B">Drop B (B F♯ B e)</option>
+            <option value="4b-Drop A♯">Drop A♯ (A♯ F A♯ d♯)</option>
+            <option value="4b-Drop A">Drop A (A E A d)</option>
+            <option disabled></option>
+            <option value="4b-1 Down">1st Down (D♯ G♯ C♯ f♯)</option>
+            <option value="4b-2 Down">2nd Down (D G C f)</option>
+            <option value="4b-3 Down">3rd Down (C♯ F♯ B e)</option>
+            <option value="4b-4 Down">4th Down (C F A♯ d♯)</option>
+            <option value="4b-5 Down">5th Down (B E A d)</option>
+            <option value="4b-6 Down">6th Down (A♯ D♯ G♯ c♯)</option>
+            <option value="4b-7 Down">7th Down (A D G c)</option>
+            <option value="4b-Custom">Custom</option>
+          </optgroup>
+          <optgroup label=" 5 String">
+            <option value="5b-Standard">Standard (B E A D g)</option>
+            <option value="5b-Drop A">Drop A (A E A D g)</option>
+            <option disabled></option>
+            <option value="5b-1 Down">1st Down (A♯ D♯ G♯ C♯ f♯)</option>
+            <option value="5b-2 Down">2nd Down (A D G C f)</option>
+          </optgroup>
+          <optgroup label=" 6 String">
+            <option value="6b-Standard">Standard (B E A D G c)</option>
+            <option value="6b-Drop A">Drop A (A E A D G c)</option>
+          </optgroup>
+        </optgroup>
+        <optgroup label="Guitar 🤮"> <!-- Sorry guys but Bass > guitar -->
+          <optgroup label=" 6 String">
+            <option value="6g-Standard">Standard (E A D G B e)</option>
+            <option value="6g-Drop D">Drop D (D A D G B e)</option>
+            <option value="6g-Drop C♯">Drop C♯ (C♯ G♯ C♯ F♯ A♯ d♯)</option>
+            <option value="6g-Drop C">Drop C (C G C F A d)</option>
+            <option value="6g-Drop B">Drop B (B G C F A d)</option>
+            <option value="6g-Drop A♯">Drop A♯ (A♯ F A♯ D♯ G c)</option>
+            <option value="6g-Drop A">Drop A (A E A D F♯ b)</option>
+            <option value="6g-Drop G♯">Drop G♯ (G♯ D♯ G♯ C♯ F a♯)</option>
+            <option value="6g-Drop G">Drop G (G D G C E a)</option>
+            <option value="6g-Drop F♯">Drop F♯ (F♯ C♯ F♯ B D♯ g♯)</option>
+            <option value="6g-Drop F">Drop F (F C F A♯ D g)</option>
+            <option disabled></option>
+            <option value="6g-1 Down">1st Down (D♯ G♯ C♯ F♯ A♯ d♯)</option>
+            <option value="6g-2 Down">2nd Down (D G C F A d)</option>
+            <option value="6g-3 Down">3rd Down (C♯ F♯ B E G♯ c♯)</option>
+            <option value="6g-4 Down">4th Down (C F A♯ D♯ G c)</option>
+            <option value="6g-5 Down">5th Down (B E A D F♯ b)</option>
+            <option value="6g-6 Down">6th Down (A♯ D♯ G♯ C♯ F a♯)</option>
+            <option value="6g-7 Down">7th Down (A D G C E a)</option>
+          </optgroup>
+          <optgroup label=" 7 String">
+            <option value="7g-Standard">Standard (A E A D G B e)</option>
+            <option value="7g-Drop D">Drop D (A D A D G B e)</option>
+            <option value="7g-Drop C♯">Drop C♯ (G♯ C♯ G♯ C♯ F♯ A♯ d♯)</option>
+            <option value="7g-Drop C">Drop C (G C G C F A d)</option>
+            <option value="7g-Drop B">Drop B (F♯ B G C F A d)</option>
+            <option value="7g-Drop A♯">Drop A♯ (F A♯ F A♯ D♯ G c)</option>
+            <option value="7g-Drop A">Drop A (E A E A D F♯ b)</option>
+            <option value="7g-Drop G♯">Drop G♯ (D♯ G♯ D♯ G♯ C♯ F a♯)</option>
+            <option value="7g-Drop G">Drop G (C G D G C E a)</option>
+            <option value="7g-Drop F♯">Drop F♯ (C♯ F♯ C♯ F♯ B D♯ g♯)</option>
+            <option value="7g-Drop F">Drop F (C F C F A♯ D g)</option>
+            <option disabled></option>
+            <option value="6g-1 Down">1st Down (G♯ D♯ G♯ C♯ F♯ A♯ d♯)</option>
+            <option value="6g-2 Down">2nd Down (G D G C F A d)</option>
+            <option value="6g-3 Down">3rd Down (F♯ C♯ F♯ B E G♯ c♯)</option>
+            <option value="6g-4 Down">4th Down (F C F A♯ D♯ G c)</option>
+            <option value="6g-5 Down">5th Down (E B E A D F♯ b)</option>
+            <option value="6g-6 Down">6th Down (D♯ A♯ D♯ G♯ C♯ F a♯)</option>
+            <option value="6g-7 Down">7th Down (D A D G C E a)</option>
+          </optgroup>
+        </optgroup>
+      </select>
+      <div id="custom-tuning" hidden>
+        <select id="custom-tuning-0">
+          <option value="C">C</option>
+          <option value="C♯">C♯</option>
+          <option value="D">D</option>
+          <option value="D♯">D♯</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="F♯">F♯</option>
+          <option value="G">G</option>
+          <option value="G♯">G♯</option>
+          <option value="A">A</option>
+          <option value="A♯">A♯</option>
+          <option value="B">B</option>
+        </select>
+        <select id="custom-tuning-1">
+          <option value="C">C</option>
+          <option value="C♯">C♯</option>
+          <option value="D">D</option>
+          <option value="D♯">D♯</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="F♯">F♯</option>
+          <option value="G">G</option>
+          <option value="G♯">G♯</option>
+          <option value="A">A</option>
+          <option value="A♯">A♯</option>
+          <option value="B">B</option>
+        </select>
+        <select id="custom-tuning-2">
+          <option value="C">C</option>
+          <option value="C♯">C♯</option>
+          <option value="D">D</option>
+          <option value="D♯">D♯</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="F♯">F♯</option>
+          <option value="G">G</option>
+          <option value="G♯">G♯</option>
+          <option value="A">A</option>
+          <option value="A♯">A♯</option>
+          <option value="B">B</option>
+        </select>
+        <select id="custom-tuning-3">
+          <option value="C">C</option>
+          <option value="C♯">C♯</option>
+          <option value="D">D</option>
+          <option value="D♯">D♯</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="F♯">F♯</option>
+          <option value="G">G</option>
+          <option value="G♯">G♯</option>
+          <option value="A">A</option>
+          <option value="A♯">A♯</option>
+          <option value="B">B</option>
+        </select>
+        <button id="custom-tuning-generate">Generate</button>
+      </div>
+    </div>
+    <div id="highlighter" hidden>
+      <select id="highlight-selector">
+        <option disabled>-- Select --</option>
+        <option value="">None</option>
+        <option value="C">C</option>
+        <option value="C♯">C♯</option>
+        <option value="D">D</option>
+        <option value="D♯">D♯</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="F♯">F♯</option>
+        <option value="G">G</option>
+        <option value="G♯">G♯</option>
+        <option value="A">A</option>
+        <option value="A♯">A♯</option>
+        <option value="B">B</option>
+      </select>
+      <button id="highlight">Highlight</button>
+    </div>
+    <br>
+    <div id="frets"></div>
+    <div id="fret-points"></div>
+    <div id="buttons">
+      <button id="animate" hidden>Animate</button>
+      <button id="play">Play example tab</button>
+    </div>
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+  <script> // ParticlesJS disabled for now; remove comment to enable it.
+  /*
+  particlesJS("particles-js", {
+    "particles": {
+      "number": {
+        "value": 200,
+        "density": {
+          "enable": true,
+          "value_area": 500//789.1476416322727
+        }
+      },
+      "color": {
+        "value": "#ffffff"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        },
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
+        }
+      },
+      "opacity": {
+        "value": 0.8,
+        "random": true,
+        "anim": {
+          "enable": true,
+          "speed": 0.2,
+          "opacity_min": 0,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 3,
+        "random": true,
+        "anim": {
+          "enable": true,
+          "speed": 10,
+          "size_min": 0,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#ffffff",
+        "opacity": 0.05,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 5,
+        "direction": "none",
+        "random": true,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": false,
+          "mode": "bubble"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+    },
+    "retina_detect": true
+  });
+  */
+  </script>
+</html>
