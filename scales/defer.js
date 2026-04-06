@@ -1,3 +1,4 @@
+const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 
 var currentRoot = null;
 var currentScale = null;
@@ -41,6 +42,21 @@ const MAJOR_SCALES = {
   'B#': ['B#', 'C##', 'D##', 'E#', 'F##', 'G##', 'A##']
 }
 
+document.getElementById("root-select").addEventListener("change", (event) => {
+  currentRoot = event.target.value;
+  if (currentScale != null) updateScale(applySuite(currentRoot, currentScale));
+});
+
+document.getElementById("scale-select").addEventListener("change", (event) => {
+  currentScale = event.target.value.split(',');
+  if (currentRoot != null) updateScale(applySuite(currentRoot, currentScale));
+});
+
+/**
+ * Applies a scale suite to a root note
+ * @param {String} root 
+ * @param {Array<String>} scale 
+ */
 function applySuite(root, scale){
   const result = [root];
 
@@ -59,6 +75,11 @@ function applySuite(root, scale){
   return result;
 }
 
+/**
+ * Shifts a note by a certain number of semitones
+ * @param {String} note 
+ * @param {Number} semitones 
+ */
 function shiftNote(note, semitones) {
   let result = note;
 
@@ -86,8 +107,11 @@ function shiftNote(note, semitones) {
   return result;
 }
 
-var audioCtx = new(window.AudioContext || window.webkitAudioContext)();
-
+/**
+ * Plays a piano note at desired pitch
+ * @param {String} note 
+ * @param {Boolean} octave 
+ */
 function pianoNote(note, octave) {
   let source = audioCtx.createBufferSource();
   fetch('./middlec.wav')
@@ -99,44 +123,112 @@ function pianoNote(note, octave) {
         source.detune.value = 100 * NOTES.indexOf(simplifyNote(note)) + (octave ? 1200 : 0);
         source.start(0);
       });
+      let key = document.getElementsByClassName('key')[NOTES.indexOf(simplifyNote(note)) + (octave ? 12 : 0)];
+      key.classList.add('pressed');
+      setTimeout(() => key.classList.remove('pressed'), 250);
     });
 }
 
 let playIndex = 1;
 let playOctave = false;
-function playScale(scale, prev) {
+/**
+ * Plays a scale
+ * @param {Array<String>} scale 
+ * @param {String} prev
+ */
+function playScale(prev) {
+  let suite = [currentRoot].concat(applySuite(currentRoot, currentScale));
+  if (!playOctave && NOTES.indexOf(simplifyNote(suite[playIndex])) < NOTES.indexOf(simplifyNote(prev))) playOctave = true;
+  pianoNote(suite[playIndex], playOctave);
+  playIndex++;
   setTimeout(() => {
-    if (!playOctave && NOTES.indexOf(simplifyNote(scale[playIndex])) < NOTES.indexOf(simplifyNote(prev))) playOctave = true;
-    pianoNote(scale[playIndex], playOctave);
-    playIndex++;
-    if (playIndex < scale.length) playScale(scale, scale[playIndex - 1]);
+    if (playIndex < suite.length) playScale(suite[playIndex - 1]);
     else {
       playIndex = 1;
       playOctave = false;
+      enableButtons();
     }
   }, 250);
 }
 
-function noteToFrequency(note) {
-  return Math.pow(2, (-9 + MORE_NOTES[note])/12) * 440;
+/**
+ * Plays a multiple notes at the same time
+ * @param {Array<String>} notes 
+ * @param {Boolean} octave
+ */
+function playNotes(notes) {
+  let prev = null;
+  for (let note of notes) {
+    pianoNote(note, NOTES.indexOf(simplifyNote(note)) < NOTES.indexOf(simplifyNote(prev)));
+    prev = note;
+  }
 }
 
+/**
+ * Plays a diatonic chord of a degree
+ * @param {Array<String>} scale 
+ * @param {Number} root 
+ */
+function playChord(scale, degree){
+  let chord = [scale[degree]];
+  for (let i = 2; i < 6; i += 2) chord.push(scale[(degree + i) % scale.length]);
+  playNotes(chord);
+}
+
+let play251Index = 0;
+/**
+ * Plays a 2-5-1 progression
+ */
+function play251(){
+  let suite = applySuite(currentRoot, currentScale);
+  suite.pop();
+  playChord(suite, play251Index == 0 ? 1 : (play251Index == 1 ? 4 : 0));
+  play251Index++;
+  setTimeout(() => {
+    if (play251Index < 3) play251();
+    else {
+      play251Index = 0;
+      enableButtons();
+    }
+  }, 1000);
+}
+
+/**
+ * Returns simplest enharmonic
+ * @param {String} note 
+ * @returns 
+ */
 function simplifyNote(note) {
   return NOTES[MORE_NOTES[note] % 12];
 }
 
-document.getElementById("root-select").addEventListener("change", (event) => {
-  currentRoot = event.target.value;
-  if (currentScale != null) updateScale(applySuite(currentRoot, currentScale));
-});
+/**
+ * Disables all inputs
+ */
+function disableButtons(){
+  document.getElementById('play').disabled = true;
+  document.getElementById('play-2-5-1').disabled = true;
+  document.getElementById('root-select').disabled = true;
+  document.getElementById('scale-select').disabled = true;
+}
 
-document.getElementById("scale-select").addEventListener("change", (event) => {
-  currentScale = event.target.value.split(',');
-  if (currentRoot != null) updateScale(applySuite(currentRoot, currentScale));
-});
+/**
+ * Enables all inputs
+ */
+function enableButtons(){
+  document.getElementById('play').disabled = false;
+  document.getElementById('play-2-5-1').disabled = false;
+  document.getElementById('root-select').disabled = false;
+  document.getElementById('scale-select').disabled = false;
+}
 
+/**
+ * Updates the scale display and enables play buttons
+ * @param {Array<String>} scale 
+ */
 function updateScale(scale){
   document.getElementById('play').disabled = false;
+  document.getElementById('play-2-5-1').disabled = false;
   document.getElementById('output').textContent = scale.join(' - ').replaceAll('b', '♭').replaceAll('#', '♯');
   let keys = Array.from(document.getElementsByClassName('key'));
   for (let key of keys) {

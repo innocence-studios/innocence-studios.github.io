@@ -51,7 +51,6 @@
   </div>
   <div id="output-container">
     <p id="output"></p>
-    <button disabled id="play" onclick="playScale([currentRoot].concat(applySuite(currentRoot, currentScale)))" class="no-select">Play scale</button>
   </div>
   <div id="keys-container">
     <ul class="no-select">
@@ -80,6 +79,10 @@
       <li class="key black as"><span></span></li>
       <li class="key white b" ><span></span></li> 
     </ul>
+  </div>
+  <div id="actions-container">
+    <button disabled id="play" onclick="disableButtons(); playScale();" class="no-select">Play scale</button>
+    <button disabled id="play-2-5-1" onclick="disableButtons(); play251();" class="no-select">Play 2-5-1</button>
   </div>
   <footer>
     <a class="footer-link" href="./scales.json" target="_blank"><img src="./favicon.ico" alt="Scales"><span>Scales</span></a>
