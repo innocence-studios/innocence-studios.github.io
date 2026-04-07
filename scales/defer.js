@@ -52,6 +52,19 @@ document.getElementById("scale-select").addEventListener("change", (event) => {
   if (currentRoot != null) updateScale(applySuite(currentRoot, currentScale));
 });
 
+Array.from(document.getElementsByClassName('key')).forEach(el => {
+  el.addEventListener('click', (e) => {
+    let classes = Array.from(el.classList);
+    let index = classes.indexOf('key');
+    if (index > -1) classes.splice(index, 1);
+    index = classes.indexOf('white');
+    if (index > -1) classes.splice(index, 1);
+    index = classes.indexOf('black');
+    if (index > -1) classes.splice(index, 1);
+    pianoNote(classes[0].replace('s', '#').toUpperCase(), classes.includes('octave'))
+  });
+})
+
 /**
  * Applies a scale suite to a root note
  * @param {String} root 
@@ -125,7 +138,7 @@ function pianoNote(note, octave) {
       });
       let key = document.getElementsByClassName('key')[NOTES.indexOf(simplifyNote(note)) + (octave ? 12 : 0)];
       key.classList.add('pressed');
-      setTimeout(() => key.classList.remove('pressed'), 250);
+      setTimeout(() => key.classList.remove('pressed'), 540);
     });
 }
 
@@ -158,9 +171,12 @@ function playScale(prev) {
  */
 function playNotes(notes) {
   let prev = null;
+  let prevOctave = null;
   for (let note of notes) {
-    pianoNote(note, NOTES.indexOf(simplifyNote(note)) < NOTES.indexOf(simplifyNote(prev)));
+    let o = NOTES.indexOf(simplifyNote(note)) < NOTES.indexOf(simplifyNote(prev)) || prevOctave || false;
+    pianoNote(note, o);
     prev = note;
+    prevOctave = o;
   }
 }
 
@@ -169,9 +185,9 @@ function playNotes(notes) {
  * @param {Array<String>} scale 
  * @param {Number} root 
  */
-function playChord(scale, degree){
+function playChord(scale, degree, seventh){
   let chord = [scale[degree]];
-  for (let i = 2; i < 6; i += 2) chord.push(scale[(degree + i) % scale.length]);
+  for (let i = 2; i < (seventh ? 8 : 6); i += 2) chord.push(scale[(degree + i) % scale.length]);
   playNotes(chord);
 }
 
@@ -179,13 +195,13 @@ let play251Index = 0;
 /**
  * Plays a 2-5-1 progression
  */
-function play251(){
+function play251(seventh){
   let suite = applySuite(currentRoot, currentScale);
   suite.pop();
-  playChord(suite, play251Index == 0 ? 1 : (play251Index == 1 ? 4 : 0));
+  playChord(suite, play251Index == 0 ? 1 : (play251Index == 1 ? 4 : 0), seventh);
   play251Index++;
   setTimeout(() => {
-    if (play251Index < 3) play251();
+    if (play251Index < 3) play251(seventh);
     else {
       play251Index = 0;
       enableButtons();
@@ -208,6 +224,7 @@ function simplifyNote(note) {
 function disableButtons(){
   document.getElementById('play').disabled = true;
   document.getElementById('play-2-5-1').disabled = true;
+  document.getElementById('play-2-5-1-7').disabled = true;
   document.getElementById('root-select').disabled = true;
   document.getElementById('scale-select').disabled = true;
 }
@@ -218,6 +235,7 @@ function disableButtons(){
 function enableButtons(){
   document.getElementById('play').disabled = false;
   document.getElementById('play-2-5-1').disabled = false;
+  document.getElementById('play-2-5-1-7').disabled = false;
   document.getElementById('root-select').disabled = false;
   document.getElementById('scale-select').disabled = false;
 }
@@ -227,8 +245,7 @@ function enableButtons(){
  * @param {Array<String>} scale 
  */
 function updateScale(scale){
-  document.getElementById('play').disabled = false;
-  document.getElementById('play-2-5-1').disabled = false;
+  enableButtons();
   document.getElementById('output').textContent = scale.join(' - ').replaceAll('b', '♭').replaceAll('#', '♯');
   let keys = Array.from(document.getElementsByClassName('key'));
   for (let key of keys) {

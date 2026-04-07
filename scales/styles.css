@@ -55,6 +55,10 @@ li {
   float: left
 }
 
+.key {
+  cursor: pointer;
+}
+
 .white {
   height: 16em;
   width: 4em;

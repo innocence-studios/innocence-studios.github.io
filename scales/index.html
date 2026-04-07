@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="../favicon.ico">
+  <link rel="icon" type="image/ico" href="../favicon.ico">
   <script src="index.js" defer></script>
   <script src="defer.js" defer></script>
   <title>Scales</title>
@@ -66,26 +66,27 @@
       <li class="key white a" ><span></span></li>
       <li class="key black as"><span></span></li>
       <li class="key white b" ><span></span></li>
-      <li class="key white c" ><span></span></li>
-      <li class="key black cs"><span></span></li>
-      <li class="key white d" ><span></span></li>
-      <li class="key black ds"><span></span></li>
-      <li class="key white e" ><span></span></li>
-      <li class="key white f" ><span></span></li>
-      <li class="key black fs"><span></span></li>
-      <li class="key white g" ><span></span></li>
-      <li class="key black gs"><span></span></li>
-      <li class="key white a" ><span></span></li>
-      <li class="key black as"><span></span></li>
-      <li class="key white b" ><span></span></li> 
+      <li class="key white c octave" ><span></span></li>
+      <li class="key black cs octave"><span></span></li>
+      <li class="key white d octave" ><span></span></li>
+      <li class="key black ds octave"><span></span></li>
+      <li class="key white e octave" ><span></span></li>
+      <li class="key white f octave" ><span></span></li>
+      <li class="key black fs octave"><span></span></li>
+      <li class="key white g octave" ><span></span></li>
+      <li class="key black gs octave"><span></span></li>
+      <li class="key white a octave" ><span></span></li>
+      <li class="key black as octave"><span></span></li>
+      <li class="key white b octave" ><span></span></li> 
     </ul>
   </div>
   <div id="actions-container">
     <button disabled id="play" onclick="disableButtons(); playScale();" class="no-select">Play scale</button>
-    <button disabled id="play-2-5-1" onclick="disableButtons(); play251();" class="no-select">Play 2-5-1</button>
+    <button disabled id="play-2-5-1" onclick="disableButtons(); play251(false);" class="no-select">Play 2-5-1</button>
+    <button disabled id="play-2-5-1-7" onclick="disableButtons(); play251(true);" class="no-select">Play 2-5-1 (7ths)</button>
   </div>
   <footer>
-    <a class="footer-link" href="./scales.json" target="_blank"><img src="./favicon.ico" alt="Scales"><span>Scales</span></a>
+    <a class="footer-link" href="./scales.json" target="_blank"><img src="../favicon.ico" alt="Scales"><span>Scales</span></a>
   </footer>
 </body>
 </html>
