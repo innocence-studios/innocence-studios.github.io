@@ -209,6 +209,98 @@ function play251(seventh){
   }, 1000);
 }
 
+let playArpeggioIndex = 0;
+let prevArpeggio = null;
+let prevOctave = null;
+let ascending = true;
+
+
+/**
+ * Plays a 2-5-1 progression
+ */
+function playArpeggio(seventh){
+  let suite = applySuite(currentRoot, currentScale);
+  let _root = currentRoot;
+  let _third = suite[2];
+  let _fifth = suite[4];
+  let _seventh = suite[6];
+  let arp = [_root, _third, _fifth, _root, _fifth, _third, _root];
+  /*let note;
+  if (seventh){
+    switch (playArpeggioIndex){
+      case 0:
+        note = suite[0];
+        break;
+      case 1:
+        note = suite[2];
+        break;
+      case 2:
+        note = suite[4];
+        break;
+      case 3:
+        note = suite[6];
+        break;
+      case 4:
+        note = suite[0];
+        break;
+      case 5:
+        note = suite[6];
+        ascending = false;
+        break;
+      case 6:
+        note = suite[4];
+        break;
+      case 7:
+        note = suite[2];
+        break;
+      case 8:
+        note = suite[0];
+        break;
+    }
+  }
+  else {
+    switch (playArpeggioIndex){
+      case 0:
+        note = suite[0];
+        break;
+      case 1:
+        note = suite[2];
+        break;
+      case 2:
+        note = suite[4];
+        break;
+      case 3:
+        note = suite[0];
+        break;
+      case 4:
+        note = suite[4];
+        ascending = false;
+        break;
+      case 5:
+        note = suite[2];
+        break;
+      case 6:
+        note = suite[0];
+        break;
+    }
+  }
+  let octave = (seventh && playArpeggioIndex >= 3 && playArpeggioIndex <= 5) || (!seventh && playArpeggioIndex >= 3 && playArpeggioIndex <= 4) ? 1 : 0;*/
+  pianoNote(arp[playIndex], false);
+  playArpeggioIndex++;
+  prevArpeggio = arp[playIndex];
+  prevOctave = false;
+  setTimeout(() => {
+    if (playArpeggioIndex < (seventh ? 9 : 7)) playArpeggio(seventh);
+    else {
+      playArpeggioIndex = 0;
+      prevArpeggio = null;
+      prevOctave = null;
+      ascending = true;
+      enableButtons();
+    }
+  }, 1000);
+}
+
 /**
  * Returns simplest enharmonic
  * @param {String} note 
@@ -225,6 +317,8 @@ function disableButtons(){
   document.getElementById('play').disabled = true;
   document.getElementById('play-2-5-1').disabled = true;
   document.getElementById('play-2-5-1-7').disabled = true;
+  document.getElementById('play-arpeggio').disabled = true;
+  document.getElementById('play-arpeggio-7').disabled = true;
   document.getElementById('root-select').disabled = true;
   document.getElementById('scale-select').disabled = true;
 }
@@ -236,6 +330,8 @@ function enableButtons(){
   document.getElementById('play').disabled = false;
   document.getElementById('play-2-5-1').disabled = false;
   document.getElementById('play-2-5-1-7').disabled = false;
+  document.getElementById('play-arpeggio').disabled = false;
+  document.getElementById('play-arpeggio-7').disabled = false;
   document.getElementById('root-select').disabled = false;
   document.getElementById('scale-select').disabled = false;
 }

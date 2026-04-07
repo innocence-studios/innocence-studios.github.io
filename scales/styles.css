@@ -84,7 +84,6 @@ ul li:last-child {
 span {
   display: table;
   margin: 0 auto 0 auto;
-  height: 100%;
   vertical-align: middle;
 }
 
