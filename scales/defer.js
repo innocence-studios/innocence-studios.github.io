@@ -3,7 +3,7 @@ const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
 var currentRoot = null;
 var currentScale = null;
 
-const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const NOTES = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B' ];
 const MORE_NOTES = {
   'C': 0, 'Dbb': 0, 'B#': 12,
   'C#': 1, 'Db': 1, 'B##': 1,
@@ -19,27 +19,27 @@ const MORE_NOTES = {
   'B': 11, 'A##': 11, 'Cb': 11
 }
 const MAJOR_SCALES = {
-  'Cb': ['Cb', 'Db', 'Eb', 'Fb', 'Gb', 'Ab', 'Bb'],
-  'C': ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
-  'C#': ['C#', 'D#', 'E#', 'F#', 'G#', 'A#', 'B#'],
-  'Db': ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'C'],
-  'D': ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'],
-  'D#': ['D#', 'E#', 'F##', 'G#', 'A#', 'B#', 'C##'],
-  'Eb': ['Eb', 'F', 'G', 'Ab', 'Bb', 'C', 'D'],
-  'E': ['E', 'F#', 'G#', 'A', 'B', 'C#', 'D#'],
-  'E#': ['E#', 'F##', 'G##', 'A#', 'B#', 'C##', 'D##'],
-  'Fb': ['Fb', 'Gb', 'Ab', 'Bbb', 'Cb', 'Db', 'Eb'],
-  'F': ['F', 'G', 'A', 'Bb', 'C', 'D', 'E'],
-  'F#': ['F#', 'G#', 'A#', 'B', 'C#', 'D#', 'E#'],
-  'Gb': ['Gb', 'Ab', 'Bb', 'Cb', 'Db', 'Eb', 'F'],
-  'G': ['G', 'A', 'B', 'C', 'D', 'E', 'F#'],
-  'G#': ['G#', 'A#', 'B#', 'C#', 'D#', 'E#', 'F##'],
-  'Ab': ['Ab', 'Bb', 'C', 'Db', 'Eb', 'F', 'G'],
-  'A': ['A', 'B', 'C#', 'D', 'E', 'F#', 'G#'],
-  'A#': ['A#', 'B#', 'C##', 'D#', 'E#', 'F##', 'G##'],
-  'Bb': ['Bb', 'C', 'D', 'Eb', 'F', 'G', 'A'],
-  'B': ['B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#'],
-  'B#': ['B#', 'C##', 'D##', 'E#', 'F##', 'G##', 'A##']
+  'Cb': [ 'Cb', 'Db', 'Eb', 'Fb', 'Gb', 'Ab', 'Bb' ],
+  'C': [ 'C', 'D', 'E', 'F', 'G', 'A', 'B' ],
+  'C#': [ 'C#', 'D#', 'E#', 'F#', 'G#', 'A#', 'B#' ],
+  'Db': [ 'Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'C' ],
+  'D': [ 'D', 'E', 'F#', 'G', 'A', 'B', 'C#' ],
+  'D#': [ 'D#', 'E#', 'F##', 'G#', 'A#', 'B#', 'C##' ],
+  'Eb': [ 'Eb', 'F', 'G', 'Ab', 'Bb', 'C', 'D' ],
+  'E': [ 'E', 'F#', 'G#', 'A', 'B', 'C#', 'D#' ],
+  'E#': [ 'E#', 'F##', 'G##', 'A#', 'B#', 'C##', 'D##' ],
+  'Fb': [ 'Fb', 'Gb', 'Ab', 'Bbb', 'Cb', 'Db', 'Eb' ],
+  'F': [ 'F', 'G', 'A', 'Bb', 'C', 'D', 'E' ],
+  'F#': [ 'F#', 'G#', 'A#', 'B', 'C#', 'D#', 'E#' ],
+  'Gb': [ 'Gb', 'Ab', 'Bb', 'Cb', 'Db', 'Eb', 'F' ],
+  'G': [ 'G', 'A', 'B', 'C', 'D', 'E', 'F#' ],
+  'G#': [ 'G#', 'A#', 'B#', 'C#', 'D#', 'E#', 'F##' ],
+  'Ab': [ 'Ab', 'Bb', 'C', 'Db', 'Eb', 'F', 'G' ],
+  'A': [ 'A', 'B', 'C#', 'D', 'E', 'F#', 'G#' ],
+  'A#': [ 'A#', 'B#', 'C##', 'D#', 'E#', 'F##', 'G##' ],
+  'Bb': [ 'Bb', 'C', 'D', 'Eb', 'F', 'G', 'A' ],
+  'B': [ 'B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#' ],
+  'B#': [ 'B#', 'C##', 'D##', 'E#', 'F##', 'G##', 'A##' ]
 }
 
 document.getElementById("root-select").addEventListener("change", (event) => {
@@ -52,8 +52,10 @@ document.getElementById("scale-select").addEventListener("change", (event) => {
   if (currentRoot != null) updateScale(applySuite(currentRoot, currentScale));
 });
 
-Array.from(document.getElementsByClassName('key')).forEach(el => {
-  el.addEventListener('click', (e) => {
+let keys = Array.from(document.getElementsByClassName('key'));
+for (let i in keys){
+  let el = keys[i];
+  el.addEventListener('click', e => {
     let classes = Array.from(el.classList);
     let index = classes.indexOf('key');
     if (index > -1) classes.splice(index, 1);
@@ -63,7 +65,13 @@ Array.from(document.getElementsByClassName('key')).forEach(el => {
     if (index > -1) classes.splice(index, 1);
     pianoNote(classes[0].replace('s', '#').toUpperCase(), classes.includes('octave'))
   });
-})
+};
+document.addEventListener('keydown', e => {
+  if (e.repeat) return;
+  let key = 'ZSXDCVGBHNJMW3E4RT6Y7U8I'.indexOf(e.code.slice(-1));
+  if (key < 0) return;
+  pianoNote(NOTES[key % 12], key >= 12);
+});
 
 /**
  * Applies a scale suite to a root note
@@ -78,7 +86,7 @@ function applySuite(root, scale){
     result.push(
       shiftNote(
         MAJOR_SCALES[root][parseInt(degree?.[0]) - 1],
-        ['bb', 'b', '', '#', '##'].indexOf((scale[i].match(/bb|##|b|#/) || [''])[0]) - 2
+        [ 'bb', 'b', '', '#', '##' ].indexOf((scale[i].match(/bb|##|b|#/) || [ '' ])[0]) - 2
       )
     );
   }
@@ -159,7 +167,7 @@ function playScale(prev) {
     else {
       playIndex = 1;
       playOctave = false;
-      enableButtons();
+      buttonState(false);
     }
   }, 250);
 }
@@ -204,101 +212,46 @@ function play251(seventh){
     if (play251Index < 3) play251(seventh);
     else {
       play251Index = 0;
-      enableButtons();
+      buttonState(false);
     }
   }, 1000);
 }
 
 let playArpeggioIndex = 0;
-let prevArpeggio = null;
-let prevOctave = null;
-let ascending = true;
-
-
 /**
- * Plays a 2-5-1 progression
+ * Plays a 1 progression
  */
 function playArpeggio(seventh){
   let suite = applySuite(currentRoot, currentScale);
-  let _root = currentRoot;
-  let _third = suite[2];
-  let _fifth = suite[4];
-  let _seventh = suite[6];
-  let arp = [_root, _third, _fifth, _root, _fifth, _third, _root];
-  /*let note;
-  if (seventh){
-    switch (playArpeggioIndex){
-      case 0:
-        note = suite[0];
-        break;
-      case 1:
-        note = suite[2];
-        break;
-      case 2:
-        note = suite[4];
-        break;
-      case 3:
-        note = suite[6];
-        break;
-      case 4:
-        note = suite[0];
-        break;
-      case 5:
-        note = suite[6];
-        ascending = false;
-        break;
-      case 6:
-        note = suite[4];
-        break;
-      case 7:
-        note = suite[2];
-        break;
-      case 8:
-        note = suite[0];
-        break;
-    }
-  }
-  else {
-    switch (playArpeggioIndex){
-      case 0:
-        note = suite[0];
-        break;
-      case 1:
-        note = suite[2];
-        break;
-      case 2:
-        note = suite[4];
-        break;
-      case 3:
-        note = suite[0];
-        break;
-      case 4:
-        note = suite[4];
-        ascending = false;
-        break;
-      case 5:
-        note = suite[2];
-        break;
-      case 6:
-        note = suite[0];
-        break;
-    }
-  }
-  let octave = (seventh && playArpeggioIndex >= 3 && playArpeggioIndex <= 5) || (!seventh && playArpeggioIndex >= 3 && playArpeggioIndex <= 4) ? 1 : 0;*/
-  pianoNote(arp[playIndex], false);
+  let notes = seventh ? [ currentRoot, suite[2], suite[4], suite[6], currentRoot, suite[6], suite[4], suite[2], currentRoot ] : [ currentRoot, suite[2], suite[4], currentRoot, suite[4], suite[2], currentRoot ];
+  let octaves = seventh ? [
+    false,
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    true,
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    false
+  ] : [
+    false,
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    true,
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
+    false
+  ];
+  pianoNote(notes[playArpeggioIndex], octaves[playArpeggioIndex]);
   playArpeggioIndex++;
-  prevArpeggio = arp[playIndex];
-  prevOctave = false;
   setTimeout(() => {
     if (playArpeggioIndex < (seventh ? 9 : 7)) playArpeggio(seventh);
     else {
       playArpeggioIndex = 0;
-      prevArpeggio = null;
-      prevOctave = null;
-      ascending = true;
-      enableButtons();
+      buttonState(false);
     }
-  }, 1000);
+  }, 150);
 }
 
 /**
@@ -311,29 +264,15 @@ function simplifyNote(note) {
 }
 
 /**
- * Disables all inputs
+ * Sets button disabled state
  */
-function disableButtons(){
-  document.getElementById('play').disabled = true;
-  document.getElementById('play-2-5-1').disabled = true;
-  document.getElementById('play-2-5-1-7').disabled = true;
-  document.getElementById('play-arpeggio').disabled = true;
-  document.getElementById('play-arpeggio-7').disabled = true;
-  document.getElementById('root-select').disabled = true;
-  document.getElementById('scale-select').disabled = true;
-}
-
-/**
- * Enables all inputs
- */
-function enableButtons(){
-  document.getElementById('play').disabled = false;
-  document.getElementById('play-2-5-1').disabled = false;
-  document.getElementById('play-2-5-1-7').disabled = false;
-  document.getElementById('play-arpeggio').disabled = false;
-  document.getElementById('play-arpeggio-7').disabled = false;
-  document.getElementById('root-select').disabled = false;
-  document.getElementById('scale-select').disabled = false;
+function buttonState(disabled) {
+  const buttonIds = [ 'play', 'root-select', 'scale-select', 'play-2-5-1', 'play-2-5-1-7', 'play-arpeggio', 'play-arpeggio-7' ];
+  const chordButtonIds = [ 'play-2-5-1', 'play-2-5-1-7', 'play-arpeggio', 'play-arpeggio-7' ];
+  
+  buttonIds.forEach(id => {
+    document.getElementById(id).disabled = disabled || (chordButtonIds.includes(id) && currentScale.length !== 7);
+  });
 }
 
 /**
@@ -341,7 +280,6 @@ function enableButtons(){
  * @param {Array<String>} scale 
  */
 function updateScale(scale){
-  enableButtons();
   document.getElementById('output').textContent = scale.join(' - ').replaceAll('b', '♭').replaceAll('#', '♯');
   let keys = Array.from(document.getElementsByClassName('key'));
   for (let key of keys) {
@@ -354,17 +292,17 @@ function updateScale(scale){
   let i = -1;
   for (let note of scale){
     i++;
-    if (NOTES.indexOf(simplifyNote(note)) < NOTES.indexOf(simplifyNote(prev))) octave = true;
-    let ind = NOTES.indexOf(simplifyNote(note)) + (octave ? 12 : 0);
-
-    if (simplifyNote(currentRoot) == simplifyNote(note)){
-      keys[ind].children[0].textContent = '1';
-      keys[ind].classList.add('focus-root');
-      checked = true;
-      continue;
+    for (let j = 0; j < 2; j++){
+      let ind = NOTES.indexOf(simplifyNote(note)) + j * 12;
+      if (simplifyNote(currentRoot) == simplifyNote(note)){
+        keys[ind].children[0].textContent = '1';
+        keys[ind].classList.add('focus-root');
+        continue;
+      }
+      keys[ind].children[0].textContent = currentScale[i].replaceAll('b', '♭').replaceAll('#', '♯');
+      keys[ind].classList.add('focus');
+      prev = note;
     }
-    keys[ind].children[0].textContent = currentScale[i].replaceAll('b', '♭').replaceAll('#', '♯');
-    keys[ind].classList.add('focus');
-    prev = note;
   }
+  buttonState(false);
 }

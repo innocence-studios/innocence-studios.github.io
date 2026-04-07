@@ -82,15 +82,14 @@
     </ul>
   </div>
   <div id="actions-container">
-    <button disabled id="play" onclick="disableButtons(); playScale();" class="no-select">Play scale</button>
-    <button disabled id="play-2-5-1" onclick="disableButtons(); play251(false);" class="no-select">Play 2-5-1</button>
-    <button disabled id="play-2-5-1-7" onclick="disableButtons(); play251(true);" class="no-select">Play 2-5-1 (7ths)</button>
-    <button disabled id="play-arpeggio" onclick="disableButtons(); playArpeggio(false);" class="no-select">Play arpeggio</button>
-    <button disabled id="play-arpeggio-7" onclick="disableButtons(); playArpeggio(true);" class="no-select">Play arpeggio (7th)</button>
+    <button disabled id="play" onclick="buttonState(true); playScale();" class="no-select">Play scale</button>
+    <button disabled id="play-2-5-1" onclick="buttonState(true); play251(false);" class="no-select">Play 2-5-1</button>
+    <button disabled id="play-2-5-1-7" onclick="buttonState(true); play251(true);" class="no-select">Play 2-5-1 (7ths)</button>
+    <button disabled id="play-arpeggio" onclick="buttonState(true); playArpeggio(false);" class="no-select">Play arpeggio</button>
+    <button disabled id="play-arpeggio-7" onclick="buttonState(true); playArpeggio(true);" class="no-select">Play arpeggio (7th)</button>
   </div>
   <footer>
     <a class="footer-link" href="./scales.json" target="_blank"><img src="../favicon.ico" alt="Scales"><span>Scales</span></a>
-    <a class="footer-link" href="./wav" target="_blank"><img src="../favicon.ico" alt="Scales"><span>Notes</span></a>
   </footer>
 </body>
 </html>
