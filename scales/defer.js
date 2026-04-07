@@ -224,25 +224,8 @@ let playArpeggioIndex = 0;
 function playArpeggio(seventh){
   let suite = applySuite(currentRoot, currentScale);
   let notes = seventh ? [ currentRoot, suite[2], suite[4], suite[6], currentRoot, suite[6], suite[4], suite[2], currentRoot ] : [ currentRoot, suite[2], suite[4], currentRoot, suite[4], suite[2], currentRoot ];
-  let octaves = seventh ? [
-    false,
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    true,
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    false
-  ] : [
-    false,
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    true,
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot)),
-    false
-  ];
+  let tHigh = NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot));
+  let octaves = seventh ? [ false, tHigh, tHigh, true, true, true, tHigh, tHigh, false ] : [ false, tHigh, tHigh, true, tHigh, tHigh, false ];
   pianoNote(notes[playArpeggioIndex], octaves[playArpeggioIndex]);
   playArpeggioIndex++;
   setTimeout(() => {
