@@ -138,7 +138,7 @@ function pianoNote(note, octave) {
       });
       let key = document.getElementsByClassName('key')[NOTES.indexOf(simplifyNote(note)) + (octave ? 12 : 0)];
       key.classList.add('pressed');
-      setTimeout(() => key.classList.remove('pressed'), 540);
+      setTimeout(() => key.classList.remove('pressed'), 350);
     });
 }
 

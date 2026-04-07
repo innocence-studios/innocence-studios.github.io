@@ -28,6 +28,9 @@ header {
 
 header h1 {
   font-size: 3rem;
+  font-family: "Cinzel Decorative", serif;
+  font-weight: 400;
+  font-style: normal;
   margin-bottom: 10px;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
@@ -45,19 +48,16 @@ header p {
 }
 
 .link-card {
-  background: #050505;
-  border-radius: 12px;
+  transition: transform 0.1s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  border-radius: 5px;
+  border: 1px solid #ccc;
   padding: 30px;
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   cursor: pointer;
-}
-
-.link-card:hover {
-  background: #060606;
-  transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
 
 .link-card a {
@@ -83,6 +83,22 @@ header p {
   color: #666;
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+.link-card:hover * {
+  transform: translateZ(10px);
+}
+
+.link-card * {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+@media (prefers-reduced-motion) {
+  .link-card {
+    transform: none !important;
+  }
 }
 
 footer {

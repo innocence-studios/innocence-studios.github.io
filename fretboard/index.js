@@ -1,25 +1,22 @@
 
-// Creating an AudioContext instance for handling audio
 const context = new AudioContext();
 let oscillator;
 let gain;
 
-// Resuming the audio context to allow audio playback
 context.resume();
 
-// Importing JSON data from play example
 fetch('./ComeAsYouAre.json')
     .then((response) => response.json())
     .then((tab) => {
       let playing = false;
       document.getElementById('play').addEventListener('click', async () => {
-        playing = !playing; // Toggles playing
+        playing = !playing;
         document.getElementById('play').textContent = `${playing ? 'Stop' : 'Play'}`;
         if (playing) drawFrets(tab.info.tuning.split('').reverse(), `${tab.info.tuning.length}${reverseObj(instruments)[tab.info.instrument]}`);
         else highlightNote(-1, -1);
       });
       let j = 0;
-      setInterval(() => { // Play the notes one by one with delay (setTimeout not working)
+      setInterval(() => {
         if (playing){
           let notes = [];
           for (let k = 0; k < tab.tabs[j].length; k++) if (!isNaN(parseInt(tab.tabs[j][k]))) notes.push(highlightNote(k, parseInt(tab.tabs[j][k])));
@@ -29,7 +26,6 @@ fetch('./ComeAsYouAre.json')
       }, 60000 / tab.info.bpm / 2);
     });
 
-// Subscripts for representing musical notes in HTML
 const subscripts = {
   '0': '₀',
   '1': '₁',
@@ -53,7 +49,6 @@ const subscripts = {
   'ə': 'ₔ',
 };
 
-// Frequencies of musical notes
 const frequencies = {
   'C': [
     16.35, 32.70, 65.41, 130.8, 261.6, 523.3, 1047.0, 2093.0, 4186.0
@@ -93,7 +88,6 @@ const frequencies = {
   ]
 };
 
-// Tuning configurations for different instruments and string counts
 const tuning = {
   'Bass': {
     '4': {
@@ -201,12 +195,8 @@ const tuning = {
   }
 };
 
-// Array of musical note names
-const notes = [
-  'C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B'
-];
+const notes = [ 'C', 'C♯', 'D', 'D♯', 'E', 'F', 'F♯', 'G', 'G♯', 'A', 'A♯', 'B' ];
 
-// Colors associated with musical notes for visualization
 const colors = {
   'C':  '#FF0000',
   'C♯': '#7F0000',
@@ -222,18 +212,15 @@ const colors = {
   'B':  '#00FFFF'
 };
 
-// Mapping instrument abbreviations to their full names
 const instruments = {
   'b': 'Bass',
   'g': 'Guitar'
 };
 
-// Points guide on fretboard
 const points = [
   3, 5, 7, 9, 12, 15, 17, 19, 21, 24
 ];
 
-// Octave configurations for different instruments and string counts
 const octaves = {
   '4b': [ 1, 1, 2, 2 ],
   '5b': [ 0, 1, 1, 2, 2 ],
@@ -243,18 +230,17 @@ const octaves = {
   '7g': [ 1, 2, 2, 3, 3, 3, 4 ],
 };
 
-// Total number of frets on the instrument (cannot be modified for now)
 const fretCount = 24;
 
-let animating = false; // Flag for animation state
+let animating = false;
 document.getElementById('animate').addEventListener('click', () => {
-  animating = !animating; // Toggling animation state when the button is clicked
+  animating = !animating;
   document.getElementById('animate').textContent = (animating ? 'Stop' : 'Animate');
 });
-let note = notes[0]; // Initial note for animation
-let i = 0; // Index for animation sequence
+let note = notes[0];
+let i = 0;
 setInterval(() => {
-  if (animating){ // Interval function for animating notes
+  if (animating){
     document.getElementById('highlight-selector').value = note;
     document.getElementById('highlight').click();
     note = notes[(notes.indexOf(note) >= notes.length - 1 ? 0 : notes.indexOf(note) + 1)];
@@ -293,7 +279,7 @@ function newElement(type, properties){
  */
 function playNote(frequency, type) {
   if (!type) type = 'triangle';
-  oscillator = context.createOscillator(); // Creating and configuring an oscillator to play the specified note
+  oscillator = context.createOscillator();
   gain = context.createGain();
   oscillator.type = type;
   oscillator.connect(gain);
@@ -303,7 +289,6 @@ function playNote(frequency, type) {
   gain.gain.exponentialRampToValueAtTime(0.00001, context.currentTime + 1);
 };
 
-// Event listener for changes in the tuning selector
 document.getElementById('tuning-selector').addEventListener('change', () => {
   if (!document.getElementById('tuning-selector').value) return;
   
@@ -319,7 +304,6 @@ document.getElementById('tuning-selector').addEventListener('change', () => {
   drawFrets(strings, value[0]);
 });
 
-// Event listener for generating custom tuning
 document.getElementById('custom-tuning-generate').addEventListener('click', () => {
   let strings = [];
   for (let i = 0; i < 4; i++) strings.push(document.getElementById(`custom-tuning-${i}`).value);
