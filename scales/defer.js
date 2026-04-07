@@ -127,19 +127,19 @@ function shiftNote(note, semitones) {
  */
 function pianoNote(note, octave) {
   let source = audioCtx.createBufferSource();
-  fetch('./middlec.wav')
+  fetch(`./wav/${octave ? 'high' : 'middle'}${simplifyNote(note).toLowerCase().replace('#', 's')}.wav`)
     .then(response => response.arrayBuffer())
     .then(res => {
       audioCtx.decodeAudioData(res, buffer => {
         source.buffer = buffer;
         source.connect(audioCtx.destination);
-        source.detune.value = 100 * NOTES.indexOf(simplifyNote(note)) + (octave ? 1200 : 0);
         source.start(0);
       });
       let key = document.getElementsByClassName('key')[NOTES.indexOf(simplifyNote(note)) + (octave ? 12 : 0)];
       key.classList.add('pressed');
       setTimeout(() => key.classList.remove('pressed'), 350);
-    });
+    })
+    .catch(err => console.error(err));
 }
 
 let playIndex = 1;
