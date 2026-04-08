@@ -202,6 +202,7 @@ function playChord(scale, degree, seventh){
 let play251Index = 0;
 /**
  * Plays a 2-5-1 progression
+ * @param {Boolean} seventh 
  */
 function play251(seventh){
   let suite = applySuite(currentRoot, currentScale);
@@ -220,12 +221,15 @@ function play251(seventh){
 let playArpeggioIndex = 0;
 /**
  * Plays a 1 progression
+ * @param {Boolean} seventh 
  */
 function playArpeggio(seventh){
   let suite = applySuite(currentRoot, currentScale);
   let notes = seventh ? [ currentRoot, suite[2], suite[4], suite[6], currentRoot, suite[6], suite[4], suite[2], currentRoot ] : [ currentRoot, suite[2], suite[4], currentRoot, suite[4], suite[2], currentRoot ];
   let tHigh = NOTES.indexOf(simplifyNote(suite[2])) < NOTES.indexOf(simplifyNote(currentRoot));
-  let octaves = seventh ? [ false, tHigh, tHigh, true, true, true, tHigh, tHigh, false ] : [ false, tHigh, tHigh, true, tHigh, tHigh, false ];
+  let fHigh = ['F', 'F#', 'G'].includes(simplifyNote(currentRoot)) || tHigh;
+  let sHigh = simplifyNote(currentRoot) != 'C';
+  let octaves = seventh ? [ false, tHigh, fHigh, sHigh, true, sHigh, fHigh, tHigh, false ] : [ false, tHigh, fHigh, true, fHigh, tHigh, false ];
   pianoNote(notes[playArpeggioIndex], octaves[playArpeggioIndex]);
   playArpeggioIndex++;
   setTimeout(() => {
@@ -248,6 +252,7 @@ function simplifyNote(note) {
 
 /**
  * Sets button disabled state
+ * @param {Boolean} disabled 
  */
 function buttonState(disabled) {
   const buttonIds = [ 'play', 'root-select', 'scale-select', 'play-2-5-1', 'play-2-5-1-7', 'play-arpeggio', 'play-arpeggio-7' ];
