@@ -305,6 +305,7 @@ window.onload = function(){
           source.buffer = buffer;
           source.connect(audioCtx.destination);
         });
+      });
   }
 }
 
