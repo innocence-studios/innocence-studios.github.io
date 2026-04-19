@@ -294,3 +294,19 @@ function updateScale(scale){
   }
   buttonState(false);
 }
+
+// Loads all the wave files when the page loads to avoid lantency
+window.onload = function(){
+  for(let i = 0; i < 24; i++){
+    fetch(`./wav/${(i >= 12 ? 'high' : 'middle') + NOTES[i % NOTES.length].replace('#', 's').toLowerCase()}.wav`)
+      .then(response => response.arrayBuffer())
+      .then(res => {
+        audioCtx.decodeAudioData(res, buffer => {
+          source.buffer = buffer;
+          source.connect(audioCtx.destination);
+        });
+  }
+}
+
+
+
