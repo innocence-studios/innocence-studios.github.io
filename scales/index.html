@@ -1,95 +1,147 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="../global.css">
-  <link rel="icon" type="image/ico" href="../favicon.ico">
-  <script src="index.js" defer></script>
-  <script src="defer.js" defer></script>
-  <title>Scales</title>
-</head>
-<body>
-  <header>
-    <a href="../">← Homepage</a>
-    <h1>Scales</h1>
-  </header>
-  <div id="selection-container">
-    <div id="root-select-container">
-      <p>Root :</p>
-      <select id="root-select" class="no-select">
-        <option value="" disabled selected>-</option>
-        <option value="C">C</option>
-        <option value="C#">C♯</option>
-        <option value="Db">D♭</option>
-        <option value="D">D</option>
-        <option value="D#">D♯</option>
-        <option value="Eb">E♭</option>
-        <option value="E">E</option>
-        <option value="E#">E♯</option>
-        <option value="Fb">F♭</option>
-        <option value="F">F</option>
-        <option value="F#">F♯</option>
-        <option value="Gb">G♭</option>
-        <option value="G">G</option>
-        <option value="G#">G♯</option>
-        <option value="Ab">A♭</option>
-        <option value="A">A</option>
-        <option value="A#">A♯</option>
-        <option value="Bb">B♭</option>
-        <option value="B">B</option>
-        <option value="B#">B♯</option>
-        <option value="Cb">C♭</option>
-      </select>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="../global.css" />
+    <link rel="icon" type="image/ico" href="../favicon.ico" />
+    <script src="index.js" defer></script>
+    <script src="defer.js" defer></script>
+    <title>Scales</title>
+  </head>
+  <body>
+    <header>
+      <a href="../">← Homepage</a>
+      <h1>Scales</h1>
+    </header>
+    <div id="selection-container">
+      <div id="root-select-container">
+        <p>Root :</p>
+        <select id="root-select" class="no-select">
+          <option value="" disabled selected>-</option>
+          <option value="C">C</option>
+          <option value="C#">C♯</option>
+          <option value="Db">D♭</option>
+          <option value="D">D</option>
+          <option value="D#">D♯</option>
+          <option value="Eb">E♭</option>
+          <option value="E">E</option>
+          <option value="E#">E♯</option>
+          <option value="Fb">F♭</option>
+          <option value="F">F</option>
+          <option value="F#">F♯</option>
+          <option value="Gb">G♭</option>
+          <option value="G">G</option>
+          <option value="G#">G♯</option>
+          <option value="Ab">A♭</option>
+          <option value="A">A</option>
+          <option value="A#">A♯</option>
+          <option value="Bb">B♭</option>
+          <option value="B">B</option>
+          <option value="B#">B♯</option>
+          <option value="Cb">C♭</option>
+        </select>
+      </div>
+      <div id="scale-select-container">
+        <p>Scale :</p>
+        <select id="scale-select" class="no-select">
+          <option value="" disabled selected>-</option>
+        </select>
+      </div>
     </div>
-    <div id="scale-select-container">
-      <p>Scale :</p>
-      <select id="scale-select" class="no-select">
-        <option value="" disabled selected>-</option>
-      </select>
+    <div id="output-container">
+      <p id="output"></p>
     </div>
-  </div>
-  <div id="output-container">
-    <p id="output"></p>
-  </div>
-  <div id="keys-container">
-    <ul class="no-select">
-      <li class="key white c" ><span></span></li>
-      <li class="key black cs"><span></span></li>
-      <li class="key white d" ><span></span></li>
-      <li class="key black ds"><span></span></li>
-      <li class="key white e" ><span></span></li>
-      <li class="key white f" ><span></span></li>
-      <li class="key black fs"><span></span></li>
-      <li class="key white g" ><span></span></li>
-      <li class="key black gs"><span></span></li>
-      <li class="key white a" ><span></span></li>
-      <li class="key black as"><span></span></li>
-      <li class="key white b" ><span></span></li>
-      <li class="key white c octave" ><span></span></li>
-      <li class="key black cs octave"><span></span></li>
-      <li class="key white d octave" ><span></span></li>
-      <li class="key black ds octave"><span></span></li>
-      <li class="key white e octave" ><span></span></li>
-      <li class="key white f octave" ><span></span></li>
-      <li class="key black fs octave"><span></span></li>
-      <li class="key white g octave" ><span></span></li>
-      <li class="key black gs octave"><span></span></li>
-      <li class="key white a octave" ><span></span></li>
-      <li class="key black as octave"><span></span></li>
-      <li class="key white b octave" ><span></span></li> 
-    </ul>
-  </div>
-  <div id="actions-container">
-    <button disabled id="play" onclick="buttonState(true); playScale();" class="no-select">Play scale</button>
-    <button disabled id="play-2-5-1" onclick="buttonState(true); play251(false);" class="no-select">Play 2-5-1</button>
-    <button disabled id="play-2-5-1-7" onclick="buttonState(true); play251(true);" class="no-select">Play 2-5-1 (7ths)</button>
-    <button disabled id="play-arpeggio" onclick="buttonState(true); playArpeggio(false);" class="no-select">Play arpeggio</button>
-    <button disabled id="play-arpeggio-7" onclick="buttonState(true); playArpeggio(true);" class="no-select">Play arpeggio (7th)</button>
-  </div>
-  <footer>
-    <a class="footer-link" href="./scales.json" target="_blank"><img src="../favicon.ico" alt="Scales"><span>Scales</span></a>
-  </footer>
-</body>
+    <div id="keys-container">
+      <ul class="no-select">
+        <li class="key white c"><span></span></li>
+        <li class="key black cs"><span></span></li>
+        <li class="key white d"><span></span></li>
+        <li class="key black ds"><span></span></li>
+        <li class="key white e"><span></span></li>
+        <li class="key white f"><span></span></li>
+        <li class="key black fs"><span></span></li>
+        <li class="key white g"><span></span></li>
+        <li class="key black gs"><span></span></li>
+        <li class="key white a"><span></span></li>
+        <li class="key black as"><span></span></li>
+        <li class="key white b"><span></span></li>
+        <li class="key white c octave"><span></span></li>
+        <li class="key black cs octave"><span></span></li>
+        <li class="key white d octave"><span></span></li>
+        <li class="key black ds octave"><span></span></li>
+        <li class="key white e octave"><span></span></li>
+        <li class="key white f octave"><span></span></li>
+        <li class="key black fs octave"><span></span></li>
+        <li class="key white g octave"><span></span></li>
+        <li class="key black gs octave"><span></span></li>
+        <li class="key white a octave"><span></span></li>
+        <li class="key black as octave"><span></span></li>
+        <li class="key white b octave"><span></span></li>
+      </ul>
+    </div>
+    <div id="actions-container">
+      <button
+        disabled
+        id="play"
+        onclick="
+          buttonState(true);
+          playScale();
+        "
+        class="no-select"
+      >
+        Play scale
+      </button>
+      <button
+        disabled
+        id="play-2-5-1"
+        onclick="
+          buttonState(true);
+          play251(false);
+        "
+        class="no-select"
+      >
+        Play 2-5-1
+      </button>
+      <button
+        disabled
+        id="play-2-5-1-7"
+        onclick="
+          buttonState(true);
+          play251(true);
+        "
+        class="no-select"
+      >
+        Play 2-5-1 (7ths)
+      </button>
+      <button
+        disabled
+        id="play-arpeggio"
+        onclick="
+          buttonState(true);
+          playArpeggio(false);
+        "
+        class="no-select"
+      >
+        Play arpeggio
+      </button>
+      <button
+        disabled
+        id="play-arpeggio-7"
+        onclick="
+          buttonState(true);
+          playArpeggio(true);
+        "
+        class="no-select"
+      >
+        Play arpeggio (7th)
+      </button>
+    </div>
+    <footer>
+      <a class="footer-link" href="./scales.json" target="_blank"
+        ><img src="../favicon.ico" alt="Scales" /><span>Scales</span></a
+      >
+    </footer>
+  </body>
 </html>

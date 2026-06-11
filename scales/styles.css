@@ -1,11 +1,12 @@
-
 ul {
+  left: 50%;
   padding-inline-start: 0;
   height: 256px;
-  width: calc(64px * 14);
-  margin: 5em auto;
+  width: calc((100dvw / 30) * 14);
+  margin: 0;
   position: relative;
   border-radius: 1em;
+  transform: translateX(-50%);
 }
 
 li {
@@ -14,7 +15,7 @@ li {
   padding: 0;
   list-style: none;
   position: relative;
-  float: left
+  float: left;
 }
 
 .key {
@@ -22,63 +23,87 @@ li {
 }
 
 .white {
-  height: 16em;
-  width: 4em;
+  width: calc(100dvw / 30);
+  aspect-ratio: 1 / 4;
   z-index: 1;
   border-left: 1px solid #bbb;
   border-bottom: 1px solid #bbb;
   border-radius: 0 0 5px 5px;
-  box-shadow: -1px 0 0 rgba(255,255,255,0.8) inset,0 0 5px #ccc inset,0 0 3px rgba(0,0,0,0.2);
-  background: linear-gradient(to bottom,#eee 0%,#fff 100%)
+  box-shadow:
+    -1px 0 0 rgba(255, 255, 255, 0.8) inset,
+    0 0 5px #ccc inset,
+    0 0 3px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(to bottom, #eee 0%, #fff 100%);
 }
 
 .black {
-  height:8em;
-  width:2em;
-  margin:0 0 0 -1em;
-  z-index:2;
-  border:1px solid #000;
-  border-radius:0 0 3px 3px;
-  box-shadow:-1px -1px 2px rgba(255,255,255,0.2) inset,0 -5px 2px 3px rgba(0,0,0,0.6) inset,0 2px 4px rgba(0,0,0,0.5);
-  background:linear-gradient(45deg,#222 0%,#555 100%)
+  width: calc(100dvw / 60);
+  aspect-ratio: 1 / 4;
+  margin: 0 0 0 -1em;
+  z-index: 2;
+  border: 1px solid #000;
+  border-radius: 0 0 3px 3px;
+  box-shadow:
+    -1px -1px 2px rgba(255, 255, 255, 0.2) inset,
+    0 -5px 2px 3px rgba(0, 0, 0, 0.6) inset,
+    0 2px 4px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, #222 0%, #555 100%);
 }
 
-.d, .e, .g, .a, .b {
-  margin:0 0 0 -1em
+.d,
+.e,
+.g,
+.a,
+.b {
+  margin: 0 0 0 -1em;
 }
 
 ul li:first-child {
-  border-radius:5px 0 5px 5px
+  border-radius: 5px 0 5px 5px;
 }
 
 ul li:last-child {
-  border-radius:0 5px 5px 5px
+  border-radius: 0 5px 5px 5px;
 }
 
 .white.focus {
-  background: linear-gradient(to bottom,#ddd 0%,#eee 100%)
+  background: linear-gradient(to bottom, #ddd 0%, #eee 100%);
 }
 
 .black.focus {
-  background: linear-gradient(45deg,#111 0%,#444 100%)
+  background: linear-gradient(45deg, #111 0%, #444 100%);
 }
 
 .white.focus-root {
-  background: linear-gradient(to bottom,#ccc 0%,#ddd 100%)
+  background: linear-gradient(to bottom, #ccc 0%, #ddd 100%);
 }
 
 .black.focus-root {
-  background: linear-gradient(45deg,#000 0%,#333 100%)
+  background: linear-gradient(45deg, #000 0%, #333 100%);
 }
 
 .white.pressed {
-  background: linear-gradient(45deg,rgb(153, 206, 206) 0%,rgb(206, 206, 206) 100%) !important;
-  box-shadow: -1px -1px 2px rgba(255,255,255,0.2) inset,0 -5px 2px 3px rgba(0,0,0,0.6) inset,0 2px 4px rgba(0,0,0,0.5) !important;
+  background: linear-gradient(
+    45deg,
+    rgb(153, 206, 206) 0%,
+    rgb(206, 206, 206) 100%
+  ) !important;
+  box-shadow:
+    -1px -1px 2px rgba(255, 255, 255, 0.2) inset,
+    0 -5px 2px 3px rgba(0, 0, 0, 0.6) inset,
+    0 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 .black.pressed {
-  background: linear-gradient(45deg,rgb(103, 206, 206) 0%,rgb(156, 206, 206) 100%) !important;
-  box-shadow: -1px -1px 2px rgba(255,255,255,0.2) inset,0 -5px 2px 3px rgba(0,0,0,0.6) inset,0 2px 4px rgba(0,0,0,0.5) !important;
+  background: linear-gradient(
+    45deg,
+    rgb(103, 206, 206) 0%,
+    rgb(156, 206, 206) 100%
+  ) !important;
+  box-shadow:
+    -1px -1px 2px rgba(255, 255, 255, 0.2) inset,
+    0 -5px 2px 3px rgba(0, 0, 0, 0.6) inset,
+    0 2px 4px rgba(0, 0, 0, 0.5) !important;
 }
 
 span {
@@ -129,7 +154,7 @@ button:disabled {
 select {
   background-color: #141414;
   border-radius: 5px;
-  border: #333 solid .1px;
+  border: #333 solid 0.1px;
   color: white;
   text-align: center;
   text-decoration: none;
@@ -137,7 +162,8 @@ select {
   font-size: 16px;
 }
 
-#selection-container, #output-container {
+#selection-container,
+#output-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -159,7 +185,8 @@ select {
   margin-top: 10px;
 }
 
-#root-select-container > p, #scale-select-container > p {
+#root-select-container > p,
+#scale-select-container > p {
   display: flex;
   justify-content: center;
   margin-top: 0;

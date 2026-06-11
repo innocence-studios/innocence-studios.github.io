@@ -1,0 +1,99 @@
+ul {
+  left: 50%;
+  padding-inline-start: 0;
+  height: 256px;
+  width: calc((100dvw / 30) * 14);
+  margin: 0;
+  position: relative;
+  border-radius: 1em;
+  transform: translateX(-50%);
+}
+
+li {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  float: left;
+}
+
+.no-select {
+  user-select: none;
+}
+
+button {
+  background-color: rgb(161, 15, 15);
+  border-radius: 5px;
+  border: none;
+  color: white;
+  padding: 1em 1.5em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+table {
+  margin: 15px 0;
+}
+
+tr {
+  display: block;
+  float: left;
+}
+
+th,
+td {
+  display: block;
+  padding: 7px;
+}
+
+table,
+h2 {
+  color: #eee;
+}
+
+button:hover {
+  background-color: rgb(173, 38, 38);
+}
+
+button:active {
+  background-color: rgb(107, 10, 10);
+}
+
+button:disabled {
+  background-color: rgb(80, 8, 8);
+  cursor: not-allowed;
+}
+
+select {
+  background-color: #141414;
+  border-radius: 5px;
+  border: #333 solid 0.1px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+#selection-container,
+#output-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#actions-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+h2 {
+  margin-bottom: 0;
+}
