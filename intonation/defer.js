@@ -14,6 +14,8 @@ function u() {
   let start = -1;
   switch (document.getElementById("intonation-select").value) {
     case "12tet":
+      if (!root.value) start = 0;
+      else start = parseInt(root.value) + 9;
       for (let i = 0; i < 13; i++)
         frequencies.push(440 * Math.pow(2, (i - 9) / 12));
       f(
@@ -88,40 +90,49 @@ function u() {
   }
 
   document.getElementById("output-container").style.visibility = "visible";
-  for (let c_ of document.getElementById("output").children[0].children)
+  for (let c_ of document.querySelector("#output > *").children)
     for (let c of c_.children) if (c.nodeName == "TD") c.remove();
 
-  if (start >= 0) {
-    let c = document.getElementById("output").children[0];
-    while (c.childNodes.length > 1) c.removeChild(c.lastChild);
+  let c = document.querySelector("#output > *");
+  while (c.childNodes.length > 1) c.removeChild(c.lastChild);
 
-    for (let i = 0; i < 12; i++) {
-      let tr = document.createElement("tr");
-      let th = document.createElement("th");
-      tr.append(th);
-      th.classList.add("no-select");
-      th.textContent = [
-        "C",
-        "C♯/D♭",
-        "D",
-        "D♯/E♭",
-        "E",
-        "F",
-        "F♯/G♭",
-        "G",
-        "G♯/A♭",
-        "A",
-        "A♯/B♭",
-        "B",
-      ][(start + i) % 12];
-      c.append(tr);
-    }
+  for (let i = 0; i < 12; i++) {
+    let tr = document.createElement("tr");
+    let th = document.createElement("th");
+    tr.append(th);
+    th.classList.add("no-select");
+    th.textContent = [
+      "C",
+      "C♯/D♭",
+      "D",
+      "D♯/E♭",
+      "E",
+      "F",
+      "F♯/G♭",
+      "G",
+      "G♯/A♭",
+      "A",
+      "A♯/B♭",
+      "B",
+    ][(start + i) % 12];
+    c.append(tr);
   }
 
+  let tet = [];
+  for (let i = 0; i < 13; i++)
+    tet.push(440 * Math.pow(2, (start + i - 9) / 12));
   for (let i = 0; i < frequencies.length; i++) {
-    let td = document.createElement("td");
-    td.textContent = Math.round((frequencies[i] + Number.EPSILON) * 100) / 100;
-    document.getElementById("output").children[0].children[i + 1]?.append(td);
+    let td1 = document.createElement("td");
+    td1.textContent = Math.round((frequencies[i] + Number.EPSILON) * 100) / 100;
+    document.querySelector("#output > *").children[i + 1]?.append(td1);
+
+    let td2 = document.createElement("td");
+    let out = (
+      Math.round(Math.log2(frequencies[i] / tet[i]) * 120000) / 100
+    ).toString();
+    out = `${out.startsWith("-") || out == "0" ? "" : "+"}${out}`;
+    td2.textContent = out;
+    document.querySelector("#output > *").children[i + 1]?.append(td2);
   }
 }
 
